@@ -11,7 +11,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
 
   const token = tokenService.get();
   const isAuthRoute =
-    req.url.includes('/auth/login') || req.url.includes('/auth/register');
+    req.url.includes('/auth/signin') || req.url.includes('/auth/signup');
 
   if (token && !isAuthRoute)
     req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
@@ -20,7 +20,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401 || error.status === 403) {
         tokenService.remove();
-        router.navigate(['auth/sign-in']);
+        router.navigate(['auth/signin']);
       }
 
       return throwError(error);
