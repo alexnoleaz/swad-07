@@ -4,9 +4,11 @@ import auth from "json-server-auth";
 const app = jsonServer.create();
 const router = jsonServer.router("db.json");
 const rules = auth.rewriter({
-  "/api/*": "/$1",
-  "/600/tasks": "/600/tasks",
-  "/600/tasks/:id": "/600/tasks/:id",
+  "/api/auth/login": "/login",
+  "/api/auth/register": "/register",
+  "/api/tasks": "/tasks",
+  "/api/664/tasks": "/664/tasks",
+  "/api/tasks/:id": "/664/tasks/:id",
 });
 
 app.db = router.db;
