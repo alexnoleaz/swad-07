@@ -20,14 +20,14 @@ export class AuthService {
   signUp(user: User): Observable<AuthResponse> {
     const { id, ...rest } = user;
     return this.httpClient
-      .post<AuthResponse>(`${this.apiUrl}/register`, rest)
+      .post<AuthResponse>(`${this.apiUrl}/signup`, rest)
       .pipe(tap((res) => this.tokenService.set(res.accessToken)));
   }
 
   signIn(user: User): Observable<AuthResponse> {
     const { email, password } = user;
     return this.httpClient
-      .post<AuthResponse>(`${this.apiUrl}/login`, {
+      .post<AuthResponse>(`${this.apiUrl}/signin`, {
         email,
         password,
       })

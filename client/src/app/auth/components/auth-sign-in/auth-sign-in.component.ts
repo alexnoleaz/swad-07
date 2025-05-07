@@ -1,32 +1,40 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-auth-login',
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './auth-login.component.html',
+  templateUrl: './auth-sign-in.component.html',
 })
-export class AuthLoginComponent {
+export class SignInComponent implements OnInit {
+  redirectUrl = '/';
   form: FormGroup;
   error?: string;
 
   private readonly fb: FormBuilder;
   private readonly authService: AuthService;
   private readonly router: Router;
+  private readonly route: ActivatedRoute;
 
-  constructor(fb: FormBuilder, authService: AuthService, router: Router) {
+  constructor(
+    fb: FormBuilder,
+    authService: AuthService,
+    router: Router,
+    route: ActivatedRoute
+  ) {
     this.fb = fb;
     this.authService = authService;
     this.router = router;
+    this.route = route;
 
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -34,11 +42,15 @@ export class AuthLoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.redirectUrl = this.route.snapshot.queryParamMap.get('redirect') || '/';
+  }
+
   onSubmit(): void {
     if (this.form.invalid) return;
 
     this.authService.signIn(this.form.value).subscribe({
-      next: () => this.router.navigate(['/']),
+      next: () => this.router.navigateByUrl(this.redirectUrl),
       error: () => (this.error = 'Incorrect email or password'),
     });
   }

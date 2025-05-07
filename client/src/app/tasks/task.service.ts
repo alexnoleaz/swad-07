@@ -12,25 +12,26 @@ import { type Task } from './task.model';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private readonly apiUrl = environment.apiUrl + 'api/tasks';
+  private readonly apiUrl = environment.apiUrl + '/api/tasks';
+  private readonly apiUrl2 = environment.apiUrl + '/api/664/tasks';
   private readonly httpClient: HttpClient;
 
   constructor(httpClient: HttpClient) {
     this.httpClient = httpClient;
   }
 
-  findAll(params: QueryParams): Observable<Task[]> {
+  findAll(params?: QueryParams): Observable<Task[]> {
     return this.httpClient
       .get<Task[]>(this.apiUrl, {
-        params: this.getHttpParams(params),
+        params: this.getHttpParams(params ?? {}),
       })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log(error.message);
           return throwError(
-            () => new Error('An error ocurred while fetching tasks'),
+            () => new Error('An error ocurred while fetching tasks')
           );
-        }),
+        })
       );
   }
 
@@ -38,13 +39,9 @@ export class TaskService {
     return this.httpClient.get<Task>(`${this.apiUrl}/${id}`);
   }
 
-  findByTitle(title: string): Observable<Task[]> {
-    return this.httpClient.get<Task[]>(`${this.apiUrl}?name_like=${title}`);
-  }
-
   create(task: Task): Observable<Task> {
     const { id, ...rest } = task;
-    return this.httpClient.post<Task>(this.apiUrl, rest);
+    return this.httpClient.post<Task>(this.apiUrl2, rest);
   }
 
   update(task: Task): Observable<Task> {

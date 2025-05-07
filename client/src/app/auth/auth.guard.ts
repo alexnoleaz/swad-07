@@ -1,30 +1,14 @@
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  GuardResult,
-  MaybeAsync,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { TokenService } from './services/token.service';
+import { inject } from '@angular/core';
 
-export class AuthGuard implements CanActivate {
-  private readonly tokenService: TokenService;
-  private readonly router: Router;
+export const authGuard: CanActivateFn = (route, state) => {
+  const tokenService = inject(TokenService);
+  const router = inject(Router);
 
-  constructor(tokenService: TokenService, router: Router) {
-    this.tokenService = tokenService;
-    this.router = router;
-  }
+  if (tokenService.get()) return true;
 
-  canActivate(
-    _route: ActivatedRouteSnapshot,
-    _state: RouterStateSnapshot,
-  ): MaybeAsync<GuardResult> {
-    const token = this.tokenService.get();
-    if (token) return true;
-
-    this.router.navigate(['/auth/login']);
-    return false;
-  }
-}
+  return router.createUrlTree(['/auth/sign-in'], {
+    queryParams: { redirect: state.url },
+  });
+};

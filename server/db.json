@@ -1,4 +1,76 @@
 {
-  "users": [],
-  "tasks": []
+  "users": [
+    {
+      "email": "admin@admin.dev",
+      "password": "$2a$10$qWjpmfzPvmS7fTAX1r3eSOPZjGkJIKWOzlAaS9ttSHs2GhJb/3ffe",
+      "id": 1
+    },
+    {
+      "email": "mod@mod.dev",
+      "password": "$2a$10$m1d5W9dlIP0WyPGc8RzTW.NFcCPFuXD.EHfzvfziYC5SRVrWYSJ8q",
+      "id": 2
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Tarea 1",
+      "description": "Esto es la tarea 1",
+      "completed": true,
+      "id": 1
+    },
+    {
+      "title": "Tarea 2",
+      "description": "Esto es la tarea 2",
+      "completed": true,
+      "id": 2
+    },
+    {
+      "title": "Tarea 3",
+      "description": "Esto es la tarea 3",
+      "completed": true,
+      "id": 3
+    },
+    {
+      "title": "Tarea 4",
+      "description": "Esto es la tarea 4",
+      "completed": true,
+      "id": 4
+    },
+    {
+      "title": "Tarea 5",
+      "description": "Esto es la tarea 5",
+      "completed": true,
+      "id": 5
+    },
+    {
+      "title": "Tarea 6",
+      "description": "Esto es la tarea 6",
+      "completed": true,
+      "id": 6
+    },
+    {
+      "title": "Tarea 7",
+      "description": "Esto es la tarea 7",
+      "completed": true,
+      "id": 7
+    },
+    {
+      "title": "Tarea 8",
+      "description": "Esto es la tarea 8",
+      "completed": true,
+      "id": 8
+    },
+    {
+      "title": "Tarea 9",
+      "description": "Esto es la tarea 9",
+      "completed": true,
+      "id": 9
+    },
+    {
+      "title": "Tarea 10",
+      "description": "Esto es la tarea 10",
+      "completed": true,
+      "id": 10
+    }
+  ]
 }
