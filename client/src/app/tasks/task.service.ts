@@ -1,6 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { type Observable } from 'rxjs';
+import { catchError, throwError, type Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { type QueryParams } from '../shared/query-params.model';
@@ -16,9 +20,18 @@ export class TaskService {
   }
 
   findAll(params: QueryParams): Observable<Task[]> {
-    return this.httpClient.get<Task[]>(this.apiUrl, {
-      params: this.getHttpParams(params),
-    });
+    return this.httpClient
+      .get<Task[]>(this.apiUrl, {
+        params: this.getHttpParams(params),
+      })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log(error.message);
+          return throwError(
+            () => new Error('An error ocurred while fetching tasks'),
+          );
+        }),
+      );
   }
 
   findOne(id: number): Observable<Task> {
